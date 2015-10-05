@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+    <head>
+        <title>Introduction</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    </head>
+<body>
+    <!-- Insert your markup here -->
+    <div class="content" ng-controller="myMainController">
+        <h1>{{message}}</h1>
+    </div>
+    <br>
+    <div class="pictures" ng-controller="pictureController">
+        <div data-ng-repeat="media in mediaList" class="singlePicture">
+            <img data-ng-src="{{ media.imagePath }}" alt="picture"
+                 ng-click="increment($index);" ng-init="counter[$index]=0"/>
+            <div class="info">
+                <div class="info-name-section">
+                    name: <span class="info-name"> {{ media.name }}</span>
+                </div>
+                <div class="info-count">
+                    Count: <span class="click-count"> {{counter[$index] }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/lib/angular/angular.js"></script>
+    <script type="text/javascript" src="js/lib/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/com/script.js"></script>
+</body>
+</html>

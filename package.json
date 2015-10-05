@@ -1,0 +1,23 @@
+{
+	"name": "Introduction",
+	"version": "0.0.1",
+	"description":"Introduction",
+	"preferGlobal": false,
+	"author": "Raman Rabtsau",
+	"contributors": [
+		{
+			"name":"Raman Rabtsau",
+			"email":"raman_rabtsau@epam.com"
+		}
+	],
+	"readMeFilename":"README.md",
+	"devDependencies":{
+		"grunt":"~0.4.1",
+		"grunt-bower-task":"~0.3.4",
+		"grunt-contrib-jshint":"~0.4.0",
+		"grunt-contrib-connect":"~0.4.0",
+		"grunt-contrib-watch":"~0.4.0",
+		"grunt-open":"~0.2.3",
+		"bower":"~1.2.8"
+	}
+}
