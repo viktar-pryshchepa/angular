@@ -12,17 +12,27 @@
     <br>
     <div class="pictures" ng-controller="pictureController">
         <div data-ng-repeat="media in mediaList" class="singlePicture">
-            <img data-ng-src="{{ media.imagePath }}" alt="picture"
-                 ng-click="increment($index);" ng-init="counter[$index]=0"/>
             <div class="info">
-                <div class="info-name-section">
+                <div class="info-name-section" ng-click="select($index);" ng-init="counter[$index]=0">
                     name: <span class="info-name"> {{ media.name }}</span>
                 </div>
                 <div class="info-count">
-                    Count: <span class="click-count"> {{counter[$index] }}</span>
+                    Count: <span class="click-count"> {{media.click}}</span>
                 </div>
             </div>
         </div>
+
+<hr>
+        <div class="area" ng-if="selected.imagePath">
+         <img data-ng-src="{{selected.imagePath}}" alt="picture" ng-click="inc(selected);" />
+            <div class="info-name-section" ng-click="select($index);" ng-init="counter[$index]=0">
+                name: <span class="info-name"> {{ selected.name }}</span>
+            </div>
+            <div class="info-count">
+                Count: <span class="click-count"> {{selected.click }}</span>
+            </div>
+        </div>
+
     </div>
 
     <script type="text/javascript" src="js/lib/angular/angular.js"></script>

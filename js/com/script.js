@@ -7,31 +7,40 @@ app.controller("myMainController", ['$scope', function($scope) {
 app.controller('pictureController', ['$scope', function ($scope) {
   var imageSource;
   $scope.counter = [];
-  imageSource = "../../img/400_400.jpg";
   $scope.mediaList = [
     {
-      imagePath: imageSource,
+      click: 0,
+      imagePath: "../../img/400_400.jpg",
       name: 'First'
     },
     {
-      imagePath: imageSource,
+      click: 0,
+      imagePath: "../../img/400_400_1.jpg",
       name: 'Second'
     },
     {
-      imagePath: imageSource,
+      click: 0,
+      imagePath: "../../img/400_400_2.jpg",
       name: 'Third'
     },
     {
-      imagePath: imageSource,
+      click: 0,
+      imagePath: "../../img/400_400_3.jpg",
       name: 'Fourth'
     },
     {
-      imagePath: imageSource,
+      click: 0,
+      imagePath: "../../img/400_400_4.jpg",
       name: 'Fifth'
     },
   ];
-  $scope.increment = function(ind){
-    $scope.counter[ind]++;
+  $scope.select = function(ind){
+    $scope.selected = $scope.mediaList[ind];
+  }
+
+  $scope.inc = function (selected) {
+    selected.click++;
+    $scope.selected = selected;
   }
 
 }]);
