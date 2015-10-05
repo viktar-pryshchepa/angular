@@ -24,7 +24,7 @@ module.exports = function (grunt) {
 		connect: {
 			options: {
 				port: 9011,
-				hostname: 'localhost'
+				hostname: '10.6.187.150'
 			},
 			reload: {
 				options: {
@@ -35,7 +35,7 @@ module.exports = function (grunt) {
 
 		open: {
 			index: {
-				path: 'http://localhost:9011/'
+				path: 'http://10.6.187.150:9011/'
 			}
 		},
 
