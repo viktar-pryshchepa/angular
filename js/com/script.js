@@ -5,8 +5,6 @@ app.controller("myMainController", ['$scope', function($scope) {
 }]);
 
 app.controller('pictureController', ['$scope', function ($scope) {
-  var imageSource;
-  $scope.counter = [];
   $scope.mediaList = [
     {
       click: 0,
