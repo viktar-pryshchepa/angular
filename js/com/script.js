@@ -1,14 +1,10 @@
 var app = angular.module("myApp", []);
 
-app.controller("myMainController", ['$scope', function($scope) {
-  $scope.message = "AAAA";
-}]);
-
-app.controller('pictureController', ['$scope','$filter', function ($scope, $filter) {
-  $scope.name_filter = '';
-  $scope._query = '';
-  $scope.sortOrder = false;
-  $scope.mediaList = [
+app.controller('pictureController', ['$scope', function ($scope) {
+  this.name_filter = '';
+    this._query = '';
+    this.sortOrder = false;
+    this.mediaList = [
     {
       click: 0,
       imagePath: "../../img/400_400.jpg",
@@ -45,28 +41,28 @@ app.controller('pictureController', ['$scope','$filter', function ($scope, $filt
       raiting: 0
     },
   ];
-  $scope.select = function(media){
-    var index =  $scope.mediaList.indexOf(media);
+  this.select = function(media){
+    var index =  this.mediaList.indexOf(media);
     console.log(index);
-    $scope.mediaList[index].viewed = '✓';
-    $scope.selected = $scope.mediaList[index];
+    this.mediaList[index].viewed = '✓';
+    this.selected = this.mediaList[index];
   }
 
-  $scope.inc = function (selected) {
+  this.inc = function (selected) {
     selected.click++;
-    $scope.selected = selected;
+    this.selected = selected;
   }
 
-  $scope.plusRaiting = function (selected) {
+  this.plusRaiting = function (selected) {
     selected.raiting++;
-    $scope.selected = selected;
+    this.selected = selected;
   }
-  $scope.minusRaiting = function (selected) {
+  this.minusRaiting = function (selected) {
     selected.raiting--;
-    $scope.selected = selected;
+    this.selected = selected;
   }
-  $scope.applySearch = function () {
-    $scope._query = $scope.query;
-    console.log($scope.sortOrder);
+  this.applySearch = function () {
+    this._query = this.query;
+    console.log(this.sortOrder);
   }
 }]);
