@@ -1,52 +1,64 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
-    <head>
-        <title>Introduction</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css"/>
-    </head>
+<head>
+    <title>Introduction</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
 <body>
-    <!-- Insert your markup here -->
-    <div class="content">
-        <h1>Introduction</h1>
-    </div>
-    <br>
-    <div class="pictures" ng-controller="pictureController as ctrl">
-        <form ng-submit="ctrl.applySearch()">
-            <input ng-model="ctrl.query">
-            <button type="submit" id="submit" value="Submit">Search</button>
-        </form>
+<!-- Insert your markup here -->
+<div class="content">
+    <h1>Introduction</h1>
+</div>
+<br>
 
-        <select ng-model="ctrl.sortOrder" ng-options="f.value as f.name for f in [{name: 'asc', value:true}, {name: 'desc', value:false}]"></select>
-        <div data-ng-repeat="media in ctrl.mediaList | orderBy:'name':ctrl.sortOrder | filter:{name:ctrl._query}" class="singlePicture">
-            <div class="info">
-                <div class="info-name-section" ng-click="ctrl.select(media);">
-                    name: <span class="info-name" ng-bind="media.name"> </span><span ng-if="media.viewed" ng-bind="media.viewed"></span>
-                </div>
-                <div class="info-count">
-                    Count: <span class="click-count" ng-bind="media.click"></span>
-                </div>
-            </div>
-        </div>
-<hr>
-        <div class="area" ng-if="ctrl.selected.imagePath">
-         <img data-ng-src="{{ ctrl.selected.imagePath }}" alt="picture" ng-click="ctrl.inc(ctrl.selected);" />
-            <div class="info-name-section" ng-click="ctrl.select($index);" ng-init="ctrl.counter[$index]=0">
-                name: <span class="info-name" ng-bind="ctrl.selected.name"></span>
+<div class="pictures" ng-controller="pictureController as ctrl">
+    <form ng-submit="ctrl.applySearch()">
+        <input ng-model="ctrl.query">
+        <button type="submit" id="submit" value="Submit">Search</button>
+    </form>
+
+    <select ng-model="ctrl.sortOrder"
+            ng-options="f.value as f.name for f in [{name: 'asc', value:true}, {name: 'desc', value:false}]"></select>
+
+    <div data-ng-repeat="media in ctrl.mediaList | orderBy:'name':ctrl.sortOrder | filter:{name:ctrl._query}"
+         class="singlePicture">
+        <div class="info">
+            <div class="info-name-section" ng-click="ctrl.select(media);">
+                name: <span class="info-name" ng-bind="media.name"> </span><span
+                    ng-if="media.viewed" ng-bind="media.viewed"></span>
             </div>
             <div class="info-count">
-                Count: <span class="click-count" ng-bind="ctrl.selected.click"></span>
-            </div>
-            <div class="info-raiting">
-                Raiting: <span class="raiting-count" ng-bind="ctrl.selected.raiting"></span>
-                 <span class="raiting-plus" ng-click="ctrl.plusRaiting(ctrl.selected)">+</span>
-                 <span class="raiting-minus" ng-click="ctrl.minusRaiting(ctrl.selected)">-</span>
+                Count: <span class="click-count" ng-bind="media.click"></span>
             </div>
         </div>
+    </div>
+    <hr>
+    <div class="area" ng-if="ctrl.selected.imagePath">
+        <img data-ng-src="{{ ctrl.selected.imagePath }}" alt="picture"
+             ng-click="ctrl.inc(ctrl.selected);"/>
 
+        <div class="info-name-section" ng-click="ctrl.select($index);"
+             ng-init="ctrl.counter[$index]=0">
+            name: <span class="info-name" ng-bind="ctrl.selected.name"></span>
+        </div>
+        <div class="info-count">
+            Count: <span class="click-count"
+                         ng-bind="ctrl.selected.click"></span>
+        </div>
+        <div class="info-raiting">
+            Raiting: <span class="raiting-count"
+                           ng-bind="ctrl.selected.raiting"></span>
+            <span class="raiting-plus"
+                  ng-click="ctrl.plusRaiting(ctrl.selected)">+</span>
+            <span class="raiting-minus"
+                  ng-click="ctrl.minusRaiting(ctrl.selected)">-</span>
+        </div>
     </div>
 
-    <script type="text/javascript" src="js/lib/angular/angular.js"></script>
-    <script type="text/javascript" src="js/lib/jquery/jquery.js"></script>
-    <script type="text/javascript" src="js/com/script.js"></script>
+</div>
+
+<script type="text/javascript" src="js/lib/angular/angular.js"></script>
+<script type="text/javascript" src="js/lib/jquery/jquery.js"></script>
+<script type="text/javascript" src="js/com/script.js"></script>
 </body>
 </html>
