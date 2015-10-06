@@ -11,25 +11,37 @@
     </div>
     <br>
     <div class="pictures" ng-controller="pictureController">
-        <div data-ng-repeat="media in mediaList" class="singlePicture">
+        <form ng-submit="applySearch()">
+            <input ng-model="query">
+            <button type="submit" id="submit" value="Submit">Search</button>
+        </form>
+
+        <select ng-model="sortOrder" ng-options="f.value as f.name for f in [{name: 'asc', value:true}, {name: 'desc', value:false}]"></select>
+        <div>{{sortOrder}}</div>
+        <div data-ng-repeat="media in mediaList | orderBy:'name':sortOrder | filter:{name:_query}" class="singlePicture">
             <div class="info">
-                <div class="info-name-section" ng-click="select($index);" ng-init="counter[$index]=0">
-                    name: <span class="info-name"> {{ media.name }}</span>
+                <div class="info-name-section" ng-click="select(media);">
+                    name: <span class="info-name" ng-bind="media.name"> </span><span ng-if="media.viewed" ng-bind="media.viewed"></span>
                 </div>
                 <div class="info-count">
-                    Count: <span class="click-count"> {{media.click}}</span>
+                    Count: <span class="click-count" ng-bind="media.click"></span>
                 </div>
             </div>
         </div>
-
+<div> {{ name_filter }}</div>
 <hr>
         <div class="area" ng-if="selected.imagePath">
-         <img data-ng-src="{{selected.imagePath}}" alt="picture" ng-click="inc(selected);" />
+         <img data-ng-src="{{ selected.imagePath }}" alt="picture" ng-click="inc(selected);" />
             <div class="info-name-section" ng-click="select($index);" ng-init="counter[$index]=0">
-                name: <span class="info-name"> {{ selected.name }}</span>
+                name: <span class="info-name" ng-bind="selected.name"></span>
             </div>
             <div class="info-count">
-                Count: <span class="click-count"> {{selected.click }}</span>
+                Count: <span class="click-count" ng-bind="selected.click"></span>
+            </div>
+            <div class="info-raiting">
+                Raiting: <span class="raiting-count" ng-bind="selected.raiting"></span>
+                 <span class="raiting-plus" ng-click="plusRaiting(selected)">+</span>
+                 <span class="raiting-minus" ng-click="minusRaiting(selected)">-</span>
             </div>
         </div>
 
