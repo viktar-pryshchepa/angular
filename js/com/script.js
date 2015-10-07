@@ -1,6 +1,6 @@
 var app = angular.module("myApp", []);
 
-app.controller('pictureController', ['$scope', function ($scope) {
+app.controller('pictureController', ['$scope', '$http', function ($scope, $http) {
   this._query = '';
   this.sortOrder = false;
 this.frm = {};
@@ -10,7 +10,7 @@ this.form = {};
   this.form.addForm = {};
   this.form.addForm.name ='';
   this.form.addForm.imagePath ='';
-
+  this.selected = null;
 
   this.mediaList = [
     {
@@ -47,11 +47,16 @@ this.form = {};
       name: 'Fifth',
       viewed: false,
       raiting: 0
-    },
+    }
   ];
+/*
+  $http.get('list.json').success(function(response) {
+
+    $scope.ctrl.mediaList = response.records;
+  });
+*/
   this.select = function (media) {
     var index = this.mediaList.indexOf(media);
-    console.log(index);
     this.mediaList[index].viewed = '✓';
     this.selected = this.mediaList[index];
     this.frm.name = this.selected.name;
@@ -78,7 +83,6 @@ this.form = {};
   }
 
   this.editItem = function (form) {
-    console.log(form);
     if (!!this.mediaList[this.frm.index]) {
       this.mediaList[this.frm.index].name = this.frm.name;
       this.mediaList[this.frm.index].imagePath = this.frm.imagePath;
@@ -95,6 +99,12 @@ this.form = {};
         raiting: 0
       };
     this.mediaList.push(obj);
+    //list.json
+    var json = angular.toJson( this.mediaList);
+  /*  $http.put('list.json')
+      .success(function (json, status, headers) {
+
+      })*/
   }
   this.resetItem = function (form) {
     this.form.addForm.imagePath = '';
