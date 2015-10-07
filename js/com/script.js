@@ -1,14 +1,16 @@
 var app = angular.module("myApp", []);
 
 app.controller('pictureController', ['$scope', function ($scope) {
-  this.name_filter = '';
   this._query = '';
   this.sortOrder = false;
 this.frm = {};
   this.frm.name = '';
   this.frm.imagePath = '';
- // this.frm.name = '';
- // this.frm.imagePath = '';
+this.form = {};
+  this.form.addForm = {};
+  this.form.addForm.name ='';
+  this.form.addForm.imagePath ='';
+
 
   this.mediaList = [
     {
@@ -75,9 +77,28 @@ this.frm = {};
     console.log(this.sortOrder);
   }
 
-  this.editItem = function () {
-    console.log(this.frm);
-    this.mediaList[this.frm.index].name = this.frm.name;
-    this.mediaList[this.frm.index].imagePath = this.frm.imagePath;
+  this.editItem = function (form) {
+    console.log(form);
+    if (!!this.mediaList[this.frm.index]) {
+      this.mediaList[this.frm.index].name = this.frm.name;
+      this.mediaList[this.frm.index].imagePath = this.frm.imagePath;
+    }
   }
+
+  this.addItem = function (form) {
+
+    var obj =   {
+        click: 0,
+        imagePath: this.form.addForm.imagePath,
+        name: this.form.addForm.name,
+        viewed: false,
+        raiting: 0
+      };
+    this.mediaList.push(obj);
+  }
+  this.resetItem = function (form) {
+    this.form.addForm.imagePath = '';
+    this.form.addForm.name = ''
+  }
+
 }]);

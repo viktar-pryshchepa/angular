@@ -12,13 +12,30 @@
 <br>
 
 <div class="pictures" ng-controller="pictureController as ctrl">
+    <div>
+        <h3>Add</h3>
+        <form name="frmAdd">
+            <input ng-required="true" ng-model="ctrl.form.addForm.name"
+                   name="name">
+            <input type="url" ng-required="true"
+                   ng-model="ctrl.form.addForm.imagePath">
+            <button class="btn" type="submit" ng-disabled="frmAdd.$invalid"
+                    ng-click="ctrl.addItem(frmAdd)">add
+            </button>
+            <button class="btn" ng-click="ctrl.resetItem(frmAdd)" type="reset">
+                cancel
+            </button>
+        </form>
+    </div>
+    <hr>
+    <h3>Choose</h3>
     <form ng-submit="ctrl.applySearch()">
         <input ng-model="ctrl.query">
         <button type="submit" id="submit" value="Submit">Search</button>
     </form>
 
     <select ng-model="ctrl.sortOrder"
-            ng-options="f.value as f.name for f in [{name: 'asc', value:true}, {name: 'desc', value:false}]"></select>
+            ng-options="f.value as f.name for f in [{name: 'desc', value:true}, {name: 'asc', value:false}]"></select>
 
     <div data-ng-repeat="media in ctrl.mediaList | orderBy:'name':ctrl.sortOrder | filter:{name:ctrl._query}"
          class="singlePicture">
@@ -33,12 +50,12 @@
         </div>
     </div>
     <hr>
-    <div class="area" ng-if="ctrl.selected.imagePath">
+    <div class="area" ng-show="ctrl.selected.imagePath">
+        <h2>Edit</h2>
         <img data-ng-src="{{ ctrl.selected.imagePath }}" alt="picture"
              ng-click="ctrl.inc(ctrl.selected);"/>
 
-        <div class="info-name-section" ng-click="ctrl.select($index);"
-             ng-init="ctrl.counter[$index]=0">
+        <div class="info-name-section">
             name: <span class="info-name" ng-bind="ctrl.selected.name"></span>
         </div>
         <div class="info-count">
@@ -47,24 +64,25 @@
         </div>
         <div class="info-raiting">
             Raiting: <span class="raiting-count"
-                           ng-bind="ctrl.
-
-
-                           .raiting"></span>
+                           ng-bind="ctrl.selected.raiting"></span>
             <span class="raiting-plus"
                   ng-click="ctrl.plusRaiting(ctrl.selected)">+</span>
             <span class="raiting-minus"
                   ng-click="ctrl.minusRaiting(ctrl.selected)">-</span>
         </div>
+
+        <form name="frm">
+            <input ng-model="ctrl.frm.name" ng-required="true" name="name">
+            <span ng-show="frm.name.$invalid"></span>
+            <input type="url" ng-model="ctrl.frm.imagePath" ng-required="true">
+            <button class="btn" type="submit" ng-disabled="frm.$invalid"
+                    ng-click="ctrl.editItem(frm)">edit
+            </button>
+            <button class="btn" type="reset">reset</button>
+        </form>
     </div>
 
-    <form ng-submit="ctrl.editItem()" name="frm" novalidate>
-        <input ng-model="ctrl.frm.name" ng-required="true" name="name">
-        <span ng-show="frm.name.$invalid"></span>
-        <input type="url" ng-model="ctrl.frm.imagePath" ng-required="true">
-        {{ frm.name.$invalid }}
-        <button class="btn" type="submit" ng-disabled="frm.$invalid">edit</button>
-    </form>
+
 </div>
 
 <script type="text/javascript" src="js/lib/angular/angular.js"></script>
