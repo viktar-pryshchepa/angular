@@ -2,9 +2,15 @@ var app = angular.module("myApp", []);
 
 app.controller('pictureController', ['$scope', function ($scope) {
   this.name_filter = '';
-    this._query = '';
-    this.sortOrder = false;
-    this.mediaList = [
+  this._query = '';
+  this.sortOrder = false;
+this.frm = {};
+  this.frm.name = '';
+  this.frm.imagePath = '';
+ // this.frm.name = '';
+ // this.frm.imagePath = '';
+
+  this.mediaList = [
     {
       click: 0,
       imagePath: "../../img/400_400.jpg",
@@ -41,11 +47,14 @@ app.controller('pictureController', ['$scope', function ($scope) {
       raiting: 0
     },
   ];
-  this.select = function(media){
-    var index =  this.mediaList.indexOf(media);
+  this.select = function (media) {
+    var index = this.mediaList.indexOf(media);
     console.log(index);
     this.mediaList[index].viewed = '✓';
     this.selected = this.mediaList[index];
+    this.frm.name = this.selected.name;
+    this.frm.imagePath = this.selected.imagePath;
+    this.frm.index = index;
   }
 
   this.inc = function (selected) {
@@ -64,5 +73,11 @@ app.controller('pictureController', ['$scope', function ($scope) {
   this.applySearch = function () {
     this._query = this.query;
     console.log(this.sortOrder);
+  }
+
+  this.editItem = function () {
+    console.log(this.frm);
+    this.mediaList[this.frm.index].name = this.frm.name;
+    this.mediaList[this.frm.index].imagePath = this.frm.imagePath;
   }
 }]);

@@ -47,7 +47,10 @@
         </div>
         <div class="info-raiting">
             Raiting: <span class="raiting-count"
-                           ng-bind="ctrl.selected.raiting"></span>
+                           ng-bind="ctrl.
+
+
+                           .raiting"></span>
             <span class="raiting-plus"
                   ng-click="ctrl.plusRaiting(ctrl.selected)">+</span>
             <span class="raiting-minus"
@@ -55,6 +58,13 @@
         </div>
     </div>
 
+    <form ng-submit="ctrl.editItem()" name="frm" novalidate>
+        <input ng-model="ctrl.frm.name" ng-required="true" name="name">
+        <span ng-show="frm.name.$invalid"></span>
+        <input type="url" ng-model="ctrl.frm.imagePath" ng-required="true">
+        {{ frm.name.$invalid }}
+        <button class="btn" type="submit" ng-disabled="frm.$invalid">edit</button>
+    </form>
 </div>
 
 <script type="text/javascript" src="js/lib/angular/angular.js"></script>
