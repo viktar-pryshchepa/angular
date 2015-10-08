@@ -11,7 +11,42 @@
 </div>
 <br>
 <div class="users" ng-controller="userController as uctrl">
+    <form name="registerUserForm" ng-show="!uctrl.checkUser()">
+        Name:
+        <input ng-required="true" ng-model="uctrl.registerUserForm.name"
+               name="name">
+        Email:
+        <input type="email" ng-required="true"
+               ng-model="uctrl.registerUserForm.email">
+        Password:
+        <input type="password" ng-required="true"
+               ng-model="uctrl.registerUserForm.password">
+        Confirm password:
+        <input type="password" ng-required="true"
+               ng-model="uctrl.registerUserForm.confirmPassword">
+        <button class="btn" type="submit" ng-disabled="registerUserForm.$invalid"
+                ng-click="uctrl.registerUser(registerUserForm)">add
+        </button>
+        <button class="btn" type="reset">
+            cancel
+        </button>
+    </form>
 
+    <form name="loginUserForm">
+        Name:
+        <input ng-required="true" ng-model="uctrl.loginForm.name"
+               name="name">
+        Password:
+        <input type="password" ng-required="true"
+               ng-model="uctrl.loginForm.password">
+
+        <button class="btn" type="submit" ng-disabled="loginUserForm.$invalid"
+                ng-click="uctrl.loginUser(loginUserForm)">login
+        </button>
+        <button class="btn" type="reset">
+            cancel
+        </button>
+    </form>
 </div>
 
 <div class="pictures" ng-controller="pictureController as ctrl">
