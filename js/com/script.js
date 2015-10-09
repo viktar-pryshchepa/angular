@@ -1,6 +1,6 @@
 var app = angular.module("myApp", []);
 
-app.controller('pictureController', ['$scope', '$http', function ($scope, $http) {
+app.controller('pictureController', ['$scope', '$http', 'getMediaService', function ($scope, $http, getMediaService) {
   this._query = '';
   this.sortOrder = false;
 this.frm = {};
@@ -49,6 +49,10 @@ this.form = {};
       raiting: 0
     }
   ];
+  getMediaService.getMedia().then(function(result) {
+    $scope.ctrl.mediaList = result.data.records;
+  });
+
 /*
   $http.get('list.json').success(function(response) {
 
@@ -145,6 +149,7 @@ app.controller('userController', ['$scope', function ($scope) {
   this.loginForm.password = '';
 
   this.loginUser = function(form) {
+    /*
     var localUserJson = localStorage.getItem('user');
     if (!!localUserJson) {
       var localUser = JSON.parse(localUserJson);
@@ -158,10 +163,11 @@ app.controller('userController', ['$scope', function ($scope) {
     }
     else {
       console.log('no user');
-    }
+    }*/
   }
 
   this.checkUser = function() {
+    var localUserJson = localStorage.getItem('user');
     if (!!localUserJson) {
       return true;
     }
@@ -169,4 +175,15 @@ app.controller('userController', ['$scope', function ($scope) {
       return false;
     }
   }
+}]);
+
+app.service('getMediaService', ['$http', function($http) {
+
+var list = [];
+  this.getMedia = function() {
+
+    return  $http.get('list.json').success(function(response) {
+      return response.records;
+    });
+  };
 }]);
