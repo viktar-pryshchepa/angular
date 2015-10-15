@@ -10,121 +10,17 @@
     <h1>Introduction</h1>
 </div>
 <br>
-<div class="users" ng-controller="userController as uctrl">
-    <form name="registerUserForm" ng-show="!uctrl.checkUser()">
-        Name:
-        <input ng-required="true" ng-model="uctrl.registerUserForm.name"
-               name="name">
-        Email:
-        <input type="email" ng-required="true"
-               ng-model="uctrl.registerUserForm.email">
-        Password:
-        <input type="password" ng-required="true"
-               ng-model="uctrl.registerUserForm.password">
-        Confirm password:
-        <input type="password" ng-required="true"
-               ng-model="uctrl.registerUserForm.confirmPassword">
-        <button class="btn" type="submit" ng-disabled="registerUserForm.$invalid"
-                ng-click="uctrl.registerUser(registerUserForm)">add
-        </button>
-        <button class="btn" type="reset">
-            cancel
-        </button>
-    </form>
+<div ng-view>
 
-    <form name="loginUserForm">
-        Name:
-        <input ng-required="true" ng-model="uctrl.loginForm.name"
-               name="name">
-        Password:
-        <input type="password" ng-required="true"
-               ng-model="uctrl.loginForm.password">
 
-        <button class="btn" type="submit" ng-disabled="loginUserForm.$invalid"
-                ng-click="uctrl.loginUser(loginUserForm)">login
-        </button>
-        <button class="btn" type="reset">
-            cancel
-        </button>
-    </form>
-</div>
 
-<div class="pictures" ng-controller="pictureController as ctrl">
-    <div>
-        <h3>Add</h3>
-        <form name="frmAdd">
-            <input ng-required="true" ng-model="ctrl.form.addForm.name"
-                   name="name">
-            <input type="url" ng-required="true"
-                   ng-model="ctrl.form.addForm.imagePath">
-            <button class="btn" type="submit" ng-disabled="frmAdd.$invalid"
-                    ng-click="ctrl.addItem(frmAdd)">add
-            </button>
-            <button class="btn" ng-click="ctrl.resetItem(frmAdd)" type="reset">
-                cancel
-            </button>
-        </form>
     </div>
-    <hr>
-    <h3>Choose</h3>
-    <form ng-submit="ctrl.applySearch()">
-        <input ng-model="ctrl.query">
-        <button type="submit" id="submit" value="Submit">Search</button>
-    </form>
-
-    <select ng-model="ctrl.sortOrder"
-            ng-options="f.value as f.name for f in [{name: 'desc', value:true}, {name: 'asc', value:false}]"></select>
-
-    <div data-ng-repeat="media in ctrl.mediaList | orderBy:'name':ctrl.sortOrder | filter:{name:ctrl._query}"
-         class="singlePicture">
-        <div class="info">
-            <div class="info-name-section" ng-click="ctrl.select(media);">
-                name: <span class="info-name" ng-bind="media.name"> </span><span
-                    ng-if="media.viewed" ng-bind="media.viewed"></span>
-            </div>
-            <div class="info-count">
-                Count: <span class="click-count" ng-bind="media.click"></span>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="area" ng-show="ctrl.selected.imagePath">
-        <h2>Edit</h2>
-        <img data-ng-src="{{ ctrl.selected.imagePath }}" alt="picture"
-             ng-click="ctrl.inc(ctrl.selected);"/>
-
-        <div class="info-name-section">
-            name: <span class="info-name" ng-bind="ctrl.selected.name"></span>
-        </div>
-        <div class="info-count">
-            Count: <span class="click-count"
-                         ng-bind="ctrl.selected.click"></span>
-        </div>
-        <div class="info-raiting">
-            Raiting: <span class="raiting-count"
-                           ng-bind="ctrl.selected.raiting"></span>
-            <span class="raiting-plus"
-                  ng-click="ctrl.plusRaiting(ctrl.selected)">+</span>
-            <span class="raiting-minus"
-                  ng-click="ctrl.minusRaiting(ctrl.selected)">-</span>
-        </div>
-
-        <form name="frm">
-            <input ng-model="ctrl.frm.name" ng-required="true" name="name">
-            <span ng-show="frm.name.$invalid"></span>
-            <input type="url" ng-model="ctrl.frm.imagePath" ng-required="true">
-            <button class="btn" type="submit" ng-disabled="frm.$invalid"
-                    ng-click="ctrl.editItem(frm)">edit
-            </button>
-            <button class="btn" type="reset">reset</button>
-        </form>
-    </div>
-
-
-</div>
 
 <script type="text/javascript" src="js/lib/angular/angular.js"></script>
+<script type="text/javascript" src="js/lib/angular-route/angular-route.js"></script>
 <script type="text/javascript" src="js/lib/jquery/jquery.js"></script>
 <script type="text/javascript" src="js/com/script.js"></script>
+<script type="text/javascript" src="modules/picture/picture.js"></script>
+<script type="text/javascript" src="modules/user/user.js"></script>
 </body>
 </html>
