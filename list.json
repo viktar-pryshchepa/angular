@@ -1,18 +1,16 @@
-{
-  "records": [
-    {
-      "click": 0,
-      "imagePath": "../../img/400_400.jpg",
-      "name": "First",
-      "viewed": false,
-      "raiting": 0
-    },
-    {
-      "click": 0,
-      "imagePath": "../../img/400_400_1.jpg",
-      "name": "Second",
-      "viewed": false,
-      "raiting": 0
-    }
-  ]
-}
+[
+  {
+    "click": 0,
+    "imagePath": "../../img/400_400.jpg",
+    "name": "First",
+    "viewed": false,
+    "raiting": 0
+  },
+  {
+    "click": 0,
+    "imagePath": "../../img/400_400_1.jpg",
+    "name": "Second",
+    "viewed": false,
+    "raiting": 0
+  }
+]

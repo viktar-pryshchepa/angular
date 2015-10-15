@@ -49,9 +49,10 @@ this.form = {};
       raiting: 0
     }
   ];
+
   getMediaService.getMedia().then(function(result) {
-    $scope.ctrl.mediaList = result.data.records;
-  });
+    this.mediaList = result.data;
+  }.bind(this));
 
 /*
   $http.get('list.json').success(function(response) {
@@ -105,10 +106,13 @@ this.form = {};
     this.mediaList.push(obj);
     //list.json
     var json = angular.toJson( this.mediaList);
-  /*  $http.put('list.json')
-      .success(function (json, status, headers) {
-
-      })*/
+      $http.post('http://angular.local', json).then(function(qwe){
+          console.log('success');
+          console.log(qwe);
+      }, function(qwe){
+          console.log('fail');
+          console.log(qwe);
+      });
   }
   this.resetItem = function (form) {
     this.form.addForm.imagePath = '';
@@ -182,8 +186,9 @@ app.service('getMediaService', ['$http', function($http) {
 var list = [];
   this.getMedia = function() {
 
-    return  $http.get('list.json').success(function(response) {
-      return response.records;
+    return  $http.get('http://angular.local/').success(function(response) {
+
+      return response;
     });
   };
 }]);
