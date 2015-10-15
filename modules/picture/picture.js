@@ -1,4 +1,9 @@
-app.controller('pictureController', ['$scope', '$http', 'MediaService', function ($scope, $http, MediaService) {
+app.controller('pictureController', ['$scope', '$http', '$location', 'MediaService', 'UserService', function ($scope, $http, $location, MediaService, UserService) {
+
+  if(!UserService.userIsLoggedIn()) {
+    $location.path('/user');
+  }
+
   this._query = '';
   this.sortOrder = false;
   this.frm = {};

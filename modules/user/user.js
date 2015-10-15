@@ -1,4 +1,4 @@
-app.controller('userController', ['$scope', 'UserService', function ($scope, UserService) {
+app.controller('userController', ['$scope', 'UserService', '$location', function ($scope, UserService, $location) {
   this.currentUser = {
 
   };
@@ -26,26 +26,21 @@ app.controller('userController', ['$scope', 'UserService', function ($scope, Use
   }
 
   this.loginForm = {};
-  this.loginForm.name = '';
+  this.loginForm.email = '';
   this.loginForm.password = '';
 
-  this.loginUser = function(form) {
-    /*
-     var localUserJson = localStorage.getItem('user');
-     if (!!localUserJson) {
-     var localUser = JSON.parse(localUserJson);
-     if (this.loginForm.name ==localUser.name && this.loginForm.password == localUser.password) {
+  this.loginUser = function (form) {
+    var candidate = {
+      email: this.loginForm.email,
+      password: this.loginForm.password
+    };
+    var user = UserService.checkUser(candidate);
+    if (user) {
+      UserService.loginUser(user);
+      $location.path('/pictures');
+    }
 
-     console.log('in');
-     }
-     else {
-     console.log('not match');
-     }
-     }
-     else {
-     console.log('no user');
-     }*/
-  }
+  };
 
   this.checkUser = function() {
     var localUserJson = localStorage.getItem('user');
