@@ -101,12 +101,20 @@ app.controller('pictureController', ['$scope', '$http', '$location', 'MediaServi
       viewed: false,
       raiting: 0
     };
+
+    if(this.mediaList == '') {
+      this.mediaList = new Array();
+    }
     this.mediaList.push(obj);
-    MediaService.postMedia(this.mediaList);
-  }
+    MediaService.postMedia(this.mediaList).then(function(result) {
+      this.mediaList = result.data;
+    }.bind(this));;
+
+
+  };
   this.resetItem = function (form) {
     this.form.addForm.imagePath = '';
     this.form.addForm.name = ''
-  }
+  };
 
 }]);

@@ -1,4 +1,4 @@
-app.controller('userController', ['$scope', 'UserService', '$location', function ($scope, UserService, $location) {
+app.controller('userController', ['$scope', 'UserService', '$location', '$state', function ($scope, UserService, $location, $state) {
   this.currentUser = {
 
   };
@@ -9,6 +9,9 @@ app.controller('userController', ['$scope', 'UserService', '$location', function
   this.registerUserForm.password = '';
   this.registerUserForm.confirmPassword = '';
 
+  if(UserService.userIsLoggedIn()) {
+    $state.go('pictures');
+  }
 
   this.registerUser = function (form) {
     if (form.$submitted && form.$valid) {
@@ -37,6 +40,7 @@ app.controller('userController', ['$scope', 'UserService', '$location', function
     var user = UserService.checkUser(candidate);
     if (user) {
       UserService.loginUser(user);
+      $state.go('pictures');
       $location.path('/pictures');
     }
 

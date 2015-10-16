@@ -1,20 +1,20 @@
-var app = angular.module("myApp", ['ngRoute']);
+var app = angular.module("myApp", ['ngRoute', 'ui.router']);
 
-app.config(['$routeProvider',
-  function ($routeProvider) {
+app.config(['$stateProvider', '$urlRouterProvider',
+  function ($stateProvider, $urlRouterProvider) {
     console.log(document.location.hostname);
-    $routeProvider.
-        when('/user', {
+    $urlRouterProvider.otherwise("/user");
+    $stateProvider
+      .state('user', {
+        url: '/user',
           templateUrl: 'modules/user/user.html',
           controller: 'userController'
-        }).
-        when('/pictures', {
+        })
+      .state('pictures', {
+        url: '/pictures',
           templateUrl: 'modules/picture/picture.html',
           controller: 'pictureController'
-        }).
-        otherwise({
-          redirectTo: '/user'
-        });
+        })
   }]);
 
 app.service('MediaService', ['$http', function ($http) {
@@ -25,10 +25,12 @@ app.service('MediaService', ['$http', function ($http) {
   };
   this.postMedia = function (media) {
     var json = angular.toJson(media);
-    $http.post('http://angular.local', json).then(
-        function (qwe) {
+    return $http.post('http://angular.local', json).then(
+        function (response) {
+          return response;
         },
-        function (qwe) {
+        function (response) {
+          console.log('Failed to post media');
         }
     );
   };
@@ -39,6 +41,7 @@ app.service('UserService', function () {
     if(this.userIsLoggedIn()) {
       return angular.fromJson(localStorage.getItem('user'));
     }
+    return false;
   };
 
   this.userIsLoggedIn = function () {
