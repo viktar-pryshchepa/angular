@@ -5,22 +5,22 @@ app.config(['$stateProvider', '$urlRouterProvider',
     console.log(document.location.hostname);
     $urlRouterProvider.otherwise("/user");
     $stateProvider
-      .state('user', {
-        url: '/user',
+        .state('user', {
+          url: '/user',
           templateUrl: 'modules/user/user.html',
           controller: 'userController'
         })
-      .state('pictures', {
-        url: '/pictures',
+        .state('pictures', {
+          url: '/pictures',
           templateUrl: 'modules/picture/picture.html',
           resolve: {
-            checkPermission: ['UserService', function(UserService, $q) {
-              if(!UserService.userIsLoggedIn()) {
+            checkPermission: ['UserService', function (UserService, $q) {
+              if (!UserService.userIsLoggedIn()) {
                 $state.go('user');
                 return $q.reject('not logged in');
               }
             }],
-            mediaAll: ['MediaService', function(MediaService) {
+            mediaAll: ['MediaService', function (MediaService) {
               return MediaService.getMedia();
             }]
           },
@@ -34,10 +34,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
  */
 app.service('VoteService', ['$cookieStore', 'UserService', function ($cookieStore, UserService) {
 
-  this.upVote = function (id){
+  this.upVote = function (id) {
 
     var user = UserService.getCurrentUser();
-    if(!$cookieStore.get(user.email + ':' + id)) {
+    if (!$cookieStore.get(user.email + ':' + id)) {
       $cookieStore.put(user.email + ':' + id, 1);
     }
 
@@ -45,12 +45,11 @@ app.service('VoteService', ['$cookieStore', 'UserService', function ($cookieStor
   this.getVote = function (id) {
     var user = UserService.getCurrentUser();
     var cookie = $cookieStore.get(user.email + ':' + id);
-    if(!!cookie) {
+    if (!!cookie) {
       return cookie;
     }
     return null;
   }
-
 
 
 }]);
@@ -75,18 +74,19 @@ app.service('MediaService', ['$http', function ($http) {
       url: "http://slim.local/postmedia",
       data: json,
       method: 'POST',
-      headers : {'Content-Type':'application/x-www-form-urlencoded'}
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 
     }).success(
         function (response) {
           console.log(response);
           return response;
         }
-    ).error(function(error){});
+    ).error(function (error) {
+        });
   };
 
   this.receiveMedia = function () {
-    this.getMedia().then(function(result){
+    this.getMedia().then(function (result) {
       this.mediaList = result.data;
     }.bind(this));
   };
@@ -104,6 +104,12 @@ app.service('MediaService', ['$http', function ($http) {
     this.mediaList = mediaList;
   }
 
+  this.deleteMedia = function (id) {
+    return $http.delete('http://slim.local/deletemedia/' + id).success(function (response) {
+      return response;
+    });
+  };
+
 }]);
 
 /**
@@ -111,7 +117,7 @@ app.service('MediaService', ['$http', function ($http) {
  */
 app.service('UserService', function () {
   this.getCurrentUser = function () {
-    if(this.userIsLoggedIn()) {
+    if (this.userIsLoggedIn()) {
       return angular.fromJson(localStorage.getItem('user'));
     }
     return false;

@@ -35,6 +35,9 @@
                 Count: <span class="click-count" ng-bind="media.click"></span>
             </div>
         </div>
+        <div ng-if="media.owner == ctrl.user.email">
+            <a href="javascript:void(0)" ng-click="ctrl.delete(media.id)">Delete</a>
+        </div>
     </div>
     <hr>
     <div class="area" ng-show="ctrl.selected.imagePath">
