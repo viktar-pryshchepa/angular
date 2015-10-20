@@ -29,6 +29,16 @@ app.config(['$stateProvider', '$urlRouterProvider',
         })
   }]);
 
+app.directive('focus', function() {
+  return {
+    restrict: 'A',
+    transclude: true,
+    link: function(scope, element, attr) {
+      element[0].focus();
+    }
+  };
+});
+
 /**
  * Vote Service.
  */
