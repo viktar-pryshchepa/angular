@@ -20,21 +20,27 @@ app.controller('pictureController', ['$scope', '$http', '$location', 'MediaServi
       var index = this.mediaList.indexOf(media);
       this.mediaList[index].viewed = '✓';
       this.selected = this.mediaList[index];
+      this.selected.raiting = VoteService.getRaiting(this.selected.id);
+      this.selected.allowed = VoteService.checkVote(this.selected.id);
     };
 
     this.inc = function (selected) {
-      VoteService.upVote(selected.id);
       selected.click++;
       this.selected = selected;
     };
 
     this.plusRaiting = function (selected) {
+      VoteService.upVote(selected.id);
       selected.raiting++;
       this.selected = selected;
+      this.selected.allowed = VoteService.checkVote(this.selected.id);
+      console.log(this.selected);
     };
     this.minusRaiting = function (selected) {
+      VoteService.downVote(selected.id);
       selected.raiting--;
       this.selected = selected;
+      this.selected.allowed = VoteService.checkVote(this.selected.id);
     };
     this.applySearch = function () {
       this._query = this.query;

@@ -37,18 +37,63 @@ app.service('VoteService', ['$cookieStore', 'UserService', function ($cookieStor
   this.upVote = function (id) {
 
     var user = UserService.getCurrentUser();
-    if (!$cookieStore.get(user.email + ':' + id)) {
-      $cookieStore.put(user.email + ':' + id, 1);
+    if (!$cookieStore.get(id)) {
+      $cookieStore.put(id, angular.toJson({raiting: 1, users: [user.email]}));
+    } else {
+      var vote = this.getVote(id);
+      vote.raiting++;
+      if (this.checkVote(id)) {
+        vote.users.push(user.email);
+      }
+      $cookieStore.put(id, angular.toJson(vote));
     }
 
   };
+
+  this.downVote = function (id) {
+
+    var user = UserService.getCurrentUser();
+    if (!$cookieStore.get(id)) {
+      $cookieStore.put(id, angular.toJson({raiting: -1, users: [user.email]}));
+    }
+    else {
+      var vote = this.getVote(id);
+      vote.raiting--;
+      if (this.checkVote(id)) {
+        vote.users.push(user.email);
+      }
+      $cookieStore.put(id, angular.toJson(vote));
+    }
+
+  };
+
+
   this.getVote = function (id) {
     var user = UserService.getCurrentUser();
-    var cookie = $cookieStore.get(user.email + ':' + id);
+    var cookie = $cookieStore.get(id);
     if (!!cookie) {
-      return cookie;
+      return angular.fromJson(cookie);
     }
     return null;
+  };
+
+  this.getRaiting = function (id) {
+    var raiting = this.getVote(id);
+    if (raiting === null) {
+      return 0;
+    }
+    return raiting.raiting;
+  }
+
+  this.checkVote = function (id) {
+    var user = UserService.getCurrentUser();
+    var vote = this.getVote(id);
+    if (vote === null) {
+      return true;
+    }
+
+    return (vote.users.indexOf(user.email) == -1);
+
   }
 
 
@@ -102,7 +147,7 @@ app.service('MediaService', ['$http', function ($http) {
 
   this.setMedia = function (mediaList) {
     this.mediaList = mediaList;
-  }
+  };
 
   this.deleteMedia = function (id) {
     return $http.delete('http://slim.local/deletemedia/' + id).success(function (response) {

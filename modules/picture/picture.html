@@ -1,6 +1,7 @@
-<div class="pictures" >
+<div class="pictures">
     <div>
         <h3>Add</h3>
+
         <form name="frmAdd">
             <input ng-required="true" ng-model="ctrl.form.addForm.name"
                    name="name">
@@ -16,6 +17,7 @@
     </div>
     <hr>
     <h3>Choose</h3>
+
     <form ng-submit="ctrl.applySearch()">
         <input ng-model="ctrl.query">
         <button type="submit" id="submit" value="Submit">Search</button>
@@ -55,10 +57,12 @@
         <div class="info-raiting">
             Raiting: <span class="raiting-count"
                            ng-bind="ctrl.selected.raiting"></span>
+            <div ng-if="ctrl.selected.allowed">
             <span class="raiting-plus"
                   ng-click="ctrl.plusRaiting(ctrl.selected)">+</span>
             <span class="raiting-minus"
                   ng-click="ctrl.minusRaiting(ctrl.selected)">-</span>
+            </div>
         </div>
     </div>
 
