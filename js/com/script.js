@@ -7,8 +7,15 @@ app.config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
         .state('user', {
           url: '/user',
-          templateUrl: 'modules/user/user.html',
-          controller: 'userController'
+          templateUrl: 'modules/user/login.html',
+          controller: 'userController',
+          controllerAs: 'uctrl'
+        })
+        .state('register', {
+          url: '/user/register',
+          templateUrl: 'modules/user/register.html',
+          controller: 'userController',
+          controllerAs: 'uctrl'
         })
         .state('pictures', {
           url: '/pictures',

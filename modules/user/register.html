@@ -1,4 +1,4 @@
-<div class="users" ng-controller="userController as uctrl">
+
     <form name="registerUserForm" >
         Name:
         <input ng-required="true" ng-model="uctrl.registerUserForm.name"
@@ -20,19 +20,4 @@
         </button>
     </form>
 
-    <form name="loginUserForm">
-        Email:
-        <input ng-required="true" ng-model="uctrl.loginForm.email"
-               name="name" focus>
-        Password:
-        <input type="password" ng-required="true"
-               ng-model="uctrl.loginForm.password">
-
-        <button class="btn" type="submit" ng-disabled="loginUserForm.$invalid"
-                ng-click="uctrl.loginUser(loginUserForm)">login
-        </button>
-        <button class="btn" type="reset">
-            cancel
-        </button>
-    </form>
-</div>
+    <a ui-sref="user">Login</a>
