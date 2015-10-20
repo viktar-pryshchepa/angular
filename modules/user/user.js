@@ -8,11 +8,11 @@ app.controller('userController', ['$scope', 'UserService', '$location', '$state'
   this.registerUserForm.email = '';
   this.registerUserForm.password = '';
   this.registerUserForm.confirmPassword = '';
-
+/*
   if(UserService.userIsLoggedIn()) {
     $state.go('pictures');
   }
-
+*/
   this.registerUser = function (form) {
     if (form.$submitted && form.$valid) {
       // Compile user object.

@@ -14,6 +14,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
         url: '/pictures',
           templateUrl: 'modules/picture/picture.html',
           resolve: {
+            checkPermission: ['UserService', function(UserService, $q) {
+              if(!UserService.userIsLoggedIn()) {
+                $state.go('user');
+                return $q.reject('not logged in');
+              }
+            }],
             mediaAll: ['MediaService', function(MediaService) {
               return MediaService.getMedia();
             }]
@@ -46,6 +52,7 @@ app.service('VoteService', ['$cookieStore', 'UserService', function ($cookieStor
   }
 
 
+
 }]);
 
 
@@ -75,15 +82,7 @@ app.service('MediaService', ['$http', function ($http) {
           console.log(response);
           return response;
         }
-    ).error(function(error){});/*
-    return $http.post('http://slim.local/postmedia', json).then(
-        function (response) {
-          return response;
-        },
-        function (response) {
-          console.log('Failed to post media');
-        }
-    );*/
+    ).error(function(error){});
   };
 
   this.receiveMedia = function () {

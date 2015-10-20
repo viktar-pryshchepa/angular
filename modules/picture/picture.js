@@ -1,9 +1,9 @@
 app.controller('pictureController', ['$scope', '$http', '$location', 'MediaService', 'UserService', 'VoteService', '$state', 'mediaAll',
   function ($scope, $http, $location, MediaService, UserService, VoteService, $state, mediaAll) {
-
+/*
   if(!UserService.userIsLoggedIn()) {
     $location.path('/user');
-  }
+  }*/
 console.log(mediaAll.data);
   this.mediaList = mediaAll.data;
   console.log(this.mediaList);
