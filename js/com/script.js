@@ -1,4 +1,4 @@
-var app = angular.module("myApp", ['ngRoute', 'ui.router']);
+var app = angular.module("myApp", ['ngRoute', 'ui.router', 'ngCookies']);
 
 app.config(['$stateProvider', '$urlRouterProvider',
   function ($stateProvider, $urlRouterProvider) {
@@ -13,29 +13,103 @@ app.config(['$stateProvider', '$urlRouterProvider',
       .state('pictures', {
         url: '/pictures',
           templateUrl: 'modules/picture/picture.html',
-          controller: 'pictureController'
+          resolve: {
+            mediaAll: ['MediaService', function(MediaService) {
+              return MediaService.getMedia();
+            }]
+          },
+          controller: 'pictureController',
+          controllerAs: 'ctrl'
         })
   }]);
 
+/**
+ * Vote Service.
+ */
+app.service('VoteService', ['$cookieStore', 'UserService', function ($cookieStore, UserService) {
+
+  this.upVote = function (id){
+
+    var user = UserService.getCurrentUser();
+    if(!$cookieStore.get(user.email + ':' + id)) {
+      $cookieStore.put(user.email + ':' + id, 1);
+    }
+
+  };
+  this.getVote = function (id) {
+    var user = UserService.getCurrentUser();
+    var cookie = $cookieStore.get(user.email + ':' + id);
+    if(!!cookie) {
+      return cookie;
+    }
+    return null;
+  }
+
+
+}]);
+
+
+/**
+ * Media Service.
+ */
 app.service('MediaService', ['$http', function ($http) {
+
+  this.mediaList = [];
+  this.selectedItem = {};
+
   this.getMedia = function () {
-    return $http.get('http://angular.local/').success(function (response) {
+    return $http.get('http://slim.local/getmedia').success(function (response) {
       return response;
     });
   };
   this.postMedia = function (media) {
     var json = angular.toJson(media);
-    return $http.post('http://angular.local', json).then(
+    return $http({
+      url: "http://slim.local/postmedia",
+      data: json,
+      method: 'POST',
+      headers : {'Content-Type':'application/x-www-form-urlencoded'}
+
+    }).success(
+        function (response) {
+          console.log(response);
+          return response;
+        }
+    ).error(function(error){});/*
+    return $http.post('http://slim.local/postmedia', json).then(
         function (response) {
           return response;
         },
         function (response) {
           console.log('Failed to post media');
         }
-    );
+    );*/
   };
+
+  this.receiveMedia = function () {
+    this.getMedia().then(function(result){
+      this.mediaList = result.data;
+    }.bind(this));
+  };
+
+
+  this.media = function () {
+    return this.mediaList;
+  };
+
+  this.selected = function () {
+    return this.selectedItem;
+  };
+
+  this.setMedia = function (mediaList) {
+    this.mediaList = mediaList;
+  }
+
 }]);
 
+/**
+ * User Service.
+ */
 app.service('UserService', function () {
   this.getCurrentUser = function () {
     if(this.userIsLoggedIn()) {
